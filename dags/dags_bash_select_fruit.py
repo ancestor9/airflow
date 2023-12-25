@@ -21,4 +21,5 @@ with DAG(
         bash_command="/opt/airflow/plugins/shell/shell_fruit.sh AVOCADO",
     )
     
-t1_orange >> t2_avocado
+    
+    t1_orange >> t2_avocado
