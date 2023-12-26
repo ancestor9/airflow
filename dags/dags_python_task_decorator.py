@@ -1,5 +1,5 @@
 import pendulum
-from airflow import DAGS
+from airflow.models.dag import DAG
 
 # copy from example_python_operator DAGS
 with DAG(
@@ -12,5 +12,5 @@ with DAG(
     @task(task_id="python_task_1")
     def print_context(some_input):
         print(some_input)
-        
+    
     python_task_1 = print_context('task decorator 실행')
