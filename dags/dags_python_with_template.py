@@ -3,7 +3,7 @@ import pendulum
 import datetime
 from airflow.operators.python import PythonOperator
 from airflow.decorators import task
-
+'''
 with DAG(
     dag_id="dags_python_template",
     schedule="30 9 * * *",
@@ -12,14 +12,40 @@ with DAG(
 ) as dag:
     
     def python_function1(start_date, end_date, **kwargs):
-        print(f'start_date is: {start_date}')
-        print(f'end_date is: {end_date}')
+        print(start_date)
+        print(end_date)
 
     python_t1 = PythonOperator(
         task_id='python_t1',
         python_callable=python_function1,
         op_kwargs={'start_date':'{{data_interval_start | ds}}', 'end_date':'{{data_interval_end | ds}}'}
     )
+    '''
+    
+print("Starting DAG script...")
+
+with DAG(
+    dag_id="day_python_template",
+    schedule_interval="30 9 * * *",
+    start_date=pendulum.datetime(2023, 3, 10, tz="Asia/Seoul"),
+    catchup=False
+) as dag:
+    print("DAG definition started...")
+
+    def python_function1(start_date, end_date, **kwargs):
+        print(f'start_date is: {start_date}')
+        print(f'end_date is: {end_date}')
+
+    python_t1 = PythonOperator(
+        task_id='python_t1',
+        python_callable=python_function1,
+        op_kwargs={'start_date':'{{ ds }}', 'end_date':'{{ ds }}'}
+    )
+
+print("DAG definition completed...")
+    
+    
+    
 
     @task(task_id='python_t2')
     def python_function2(**kwargs):
