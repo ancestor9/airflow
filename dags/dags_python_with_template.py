@@ -22,7 +22,7 @@ with DAG(
     )
     '''
     
-print("Starting DAG script...")
+    print("Starting DAG script...")
 
 with DAG(
     dag_id="day_python_template",
@@ -42,7 +42,7 @@ with DAG(
         op_kwargs={'start_date':'{{ ds }}', 'end_date':'{{ ds }}'}
     )
 
-print("DAG definition completed...")
+    print("DAG definition completed...")
     
     
     
