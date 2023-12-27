@@ -15,5 +15,10 @@ with DAG(
     def show_templates(**kwargs):
         from pprint import pprint
         pprint(kwargs)
-    
-    show_templates
+
+    @task(task_id="downstream_task")
+    def downstream_task(**kwargs):
+        print("Downstream task executed.")
+        
+    # Set up the task dependencies
+    show_templates >> downstream_task
