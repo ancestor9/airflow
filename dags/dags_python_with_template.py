@@ -13,7 +13,7 @@ with DAG(
     
     def python_function1(start_date, end_date, **kwargs):
         print(f'start_date is: {start_date}')
-        print(f'end_date is: {end_date})
+        print(f'end_date is: {end_date}')
 
     python_t1 = PythonOperator(
         task_id='python_t1',
