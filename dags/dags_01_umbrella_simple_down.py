@@ -30,7 +30,7 @@ create_tmp_folder = BashOperator(
 
 download_launches = BashOperator(
     task_id="download_launches",
-    bash_command="curl -o ./tmp/launches.json -L 'https://ll.thespacedevs.com/2.0.0/launch/upcoming'",  # noqa: E501
+    bash_command="curl -o /tmp/launches.json -L 'https://ll.thespacedevs.com/2.0.0/launch/upcoming'",  # noqa: E501
     dag=dag,
 )
 
