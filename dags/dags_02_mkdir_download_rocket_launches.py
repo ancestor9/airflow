@@ -3,7 +3,7 @@ from airflow import DAG
 from airflow.operators.bash import BashOperator
 
 dag = DAG(
-    dag_id="02_umbrella_simple_makedir",
+    dag_id="02_mkdir_download_rocket_launches",
     start_date=airflow.utils.dates.days_ago(5),
     schedule_interval="@daily",
 )
@@ -20,5 +20,8 @@ download_launches = BashOperator(
     bash_command="curl -o /tmp/launches.json -L 'https://ll.thespacedevs.com/2.0.0/launch/upcoming'",  # noqa: E501
     dag=dag,
 )
+
+
+
 
 create_tmp_folder >> download_launches
