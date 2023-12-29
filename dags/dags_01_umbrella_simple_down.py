@@ -18,11 +18,11 @@ dag = DAG(
         task_id="bash_t2",
         bash_command="echo $HOSTNAME",
     )
-    
+'''    
     # Create the tmp folder if it doesn't exist
     create_tmp_folder = BashOperator(
         task_id="create_tmp_folder",
         bash_command="mkdir -p /tmp"
-)
-    
-bash_t1 >> bash_t2 >> create_tmp_folder
+    )
+'''
+bash_t1 >> bash_t2 # >> create_tmp_folder
