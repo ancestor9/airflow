@@ -21,6 +21,14 @@ bash_t2 = BashOperator(
     dag=dag,
 )
 
+# Find out the current folder location
+present_working_folder = BashOperator(
+    task_id="present working directory",
+    bash_command="pwd",
+    dag=dag,
+)
+
+
 # Create the tmp folder if it doesn't exist
 create_tmp_folder = BashOperator(
     task_id="create_tmp_folder",
@@ -35,4 +43,4 @@ download_launches = BashOperator(
 )
 
 
-bash_t1 >> bash_t2 >> create_tmp_folder >> download_launches
+bash_t1 >> bash_t2 >> present_working_folder >> create_tmp_folder >> download_launches
