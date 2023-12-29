@@ -6,7 +6,7 @@ dag = DAG(
     dag_id="02_umbrella_simple_makedir",
     start_date=airflow.utils.dates.days_ago(5),
     schedule_interval="@daily",
-) as dag:
+) as dag:   
 
     # [START howto_operator_bash]
     bash_t1 = BashOperator(
