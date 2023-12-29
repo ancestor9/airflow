@@ -24,7 +24,7 @@ bash_t2 = BashOperator(
 # Create the tmp folder if it doesn't exist
 create_tmp_folder = BashOperator(
     task_id="create_tmp_folder",
-    bash_command="mkdir -p /tmp",
+    bash_command="mkdir -p ./tmp",
     dag=dag,
 )
 
