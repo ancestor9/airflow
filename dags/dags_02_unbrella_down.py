@@ -5,7 +5,7 @@ from airflow import DAG
 from airflow.operators.dummy import DummyOperator
 
 dag = DAG(
-    dag_id="01_umbrella",
+    dag_id="02_umbrella",
     description="Umbrellagi example with DummyOperators.",
     start_date=airflow.utils.dates.days_ago(5),
     schedule_interval="@daily",
