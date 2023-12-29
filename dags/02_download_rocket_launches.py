@@ -11,7 +11,7 @@ from airflow.operators.python import PythonOperator
 dag = DAG(
     dag_id="download_rocket_launches",
     description="Download rocket pictures of recently launched rockets.",
-    start_date=airflow.utils.dates.days_ago(14),
+    start_date=airflow.utils.dates.days_ago(1),
     schedule_interval="@daily",
 )
 
