@@ -17,23 +17,23 @@ dag = DAG(
 
 download_launches = BashOperator(
     task_id="download_launches",
-    bash_command="curl -o /tmp/launches.json -L 'https://ll.thespacedevs.com/2.0.0/launch/upcoming'",  # noqa: E501
+    bash_command="curl -o /home/ancestor9/airflow/tmp/launches.json -L 'https://ll.thespacedevs.com/2.0.0/launch/upcoming'",  # noqa: E501
     dag=dag,
 )
 
 def _get_pictures():
     # Ensure directory exists
-    pathlib.Path("/tmp/images").mkdir(parents=True, exist_ok=True)
+    pathlib.Path("/home/ancestor9/airflow/tmp/images").mkdir(parents=True, exist_ok=True)
 
     # Download all pictures in launches.json
-    with open("/tmp/launches.json") as f:
+    with open("/home/ancestor9/airflow/tmp/launches.json") as f:
         launches = json.load(f)
         image_urls = [launch["image"] for launch in launches["results"]]
         for image_url in image_urls:
             try:
                 response = requests.get(image_url)
                 image_filename = image_url.split("/")[-1]
-                target_file = f"/tmp/images/{image_filename}"
+                target_file = f"/home/ancestor9/airflow/tmp/images/{image_filename}"
                 with open(target_file, "wb") as f:
                     f.write(response.content)
                 print(f"Downloaded {image_url} to {target_file}")
@@ -49,7 +49,7 @@ get_pictures = PythonOperator(
 
 notify = BashOperator(
     task_id="notify",
-    bash_command='echo "There are now $(ls /tmp/images/ | wc -l) images."',
+    bash_command='echo "There are now $(ls /home/ancestor9/airflow/tmp/images/ | wc -l) images."',
     dag=dag,
 )
 
