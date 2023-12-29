@@ -21,8 +21,6 @@ download_launches = BashOperator(
 )
 
 def _get_pictures():
-    # Ensure directory exists
-    # pathlib.Path("/home/ancestor9/airflow/tmp/images").mkdir(parents=True, exist_ok=True)
 
     # Download all pictures in launches.json
     with open("/home/ancestor9/airflow/tmp/launches.json") as f:
