@@ -7,14 +7,7 @@ import requests
 import requests.exceptions as requests_exceptions
 
 dag = DAG(
-    dag_id="makefolder_download_rocket_launches",
-    description="Download rocket pictures of recently launched rockets.",
-    start_date=days_ago(3),
-    schedule_interval="@daily",
-)
-
-dag = DAG(
-    dag_id="02_mkdir_download_rocket_launches",
+    dag_id="03_download_rocket_launches",
     start_date=airflow.utils.dates.days_ago(5),
     schedule_interval="@daily",
 )
@@ -31,8 +24,6 @@ download_launches = BashOperator(
     bash_command="curl -o /tmp/launches.json -L 'https://ll.thespacedevs.com/2.0.0/launch/upcoming'",  # noqa: E501
     dag=dag,
 )
-
-
 
 def _get_pictures():
     # Ensure directory exists
@@ -57,7 +48,9 @@ def _get_pictures():
 
 
 get_pictures = PythonOperator(
-    task_id="get_pictures", python_callable=_get_pictures, dag=dag
+    task_id="get_pictures", 
+    python_callable=_get_pictures, 
+    dag=dag
 )
 
 notify = BashOperator(
@@ -65,7 +58,6 @@ notify = BashOperator(
     bash_command='echo "There are now $(ls /tmp/images/ | wc -l) images."',
     dag=dag,
 )
-
 
 # Set up the task dependencies
 create_tmp_folder >> download_launches >> get_pictures >> notify
