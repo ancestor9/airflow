@@ -27,12 +27,17 @@ create_tmp_folder = BashOperator(
     bash_command="mkdir -p ./tmp",
     dag=dag,
 )
-
+'''
 download_launches = BashOperator(
     task_id="download_launches",
     bash_command="curl -o /tmp/launches.json -L 'https://ll.thespacedevs.com/2.0.0/launch/upcoming'",  # noqa: E501
     dag=dag,
 )
-
+'''
+download_launches = BashOperator(
+    task_id="download_launches",
+    bash_command="curl -o "$(pwd)/launches.json" -L 'https://ll.thespacedevs.com/2.0.0/launch/upcoming'",  # noqa: E501
+    dag=dag,
+)
 
 bash_t1 >> bash_t2 >> create_tmp_folder >> download_launches
