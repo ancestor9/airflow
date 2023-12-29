@@ -8,11 +8,6 @@ from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
 import os
 
-# Specify the directory path
-directory_path = '/home/ancestor9/airflow/tmp'
-# Create the directory
-os.makedirs(directory_path, exist_ok=True)
-
 dag = DAG(
     dag_id="download_rocket_launches",
     description="Download rocket pictures of recently launched rockets.",
