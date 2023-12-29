@@ -23,7 +23,7 @@ bash_t2 = BashOperator(
 
 # Find out the current folder location
 present_working_folder = BashOperator(
-    task_id="present working directory",
+    task_id="present_working_directory",
     bash_command="pwd",
     dag=dag,
 )
