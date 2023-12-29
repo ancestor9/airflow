@@ -6,7 +6,6 @@ import requests.exceptions as requests_exceptions
 from airflow.models.dag import DAG
 from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
-import os
 
 dag = DAG(
     dag_id="download_rocket_launches",
@@ -23,7 +22,7 @@ download_launches = BashOperator(
 
 def _get_pictures():
     # Ensure directory exists
-    pathlib.Path("/home/ancestor9/airflow/tmp/images").mkdir(parents=True, exist_ok=True)
+    # pathlib.Path("/home/ancestor9/airflow/tmp/images").mkdir(parents=True, exist_ok=True)
 
     # Download all pictures in launches.json
     with open("/home/ancestor9/airflow/tmp/launches.json") as f:
