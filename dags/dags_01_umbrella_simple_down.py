@@ -21,26 +21,18 @@ bash_t2 = BashOperator(
     dag=dag,
 )
 
-# Find out the current folder location
-present_working_folder = BashOperator(
-    task_id="present_working_directory",
-    bash_command="pwd",
-    dag=dag,
-)
-
-
 # Create the tmp folder if it doesn't exist
 create_tmp_folder = BashOperator(
     task_id="create_tmp_folder",
-    bash_command="mkdir -p ./tmp",
+    bash_command="mkdir -p ./tmpp",
     dag=dag,
 )
-'''
+
 download_launches = BashOperator(
     task_id="download_launches",
     bash_command="curl -o ./tmp/launches.json -L 'https://ll.thespacedevs.com/2.0.0/launch/upcoming'",  # noqa: E501
     dag=dag,
 )
-'''
 
-bash_t1 >> bash_t2 >> present_working_folder >> create_tmp_folder # >> download_launches
+
+bash_t1 >> bash_t2 >> create_tmp_folder >> download_launches
