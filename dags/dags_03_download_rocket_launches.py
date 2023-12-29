@@ -1,10 +1,13 @@
 import json
-from airflow.models.dag import DAG
-from airflow.operators.bash import BashOperator
-from airflow.operators.python import PythonOperator
-from airflow.utils.dates import days_ago
+import pathlib
+
+import airflow.utils.dates
 import requests
 import requests.exceptions as requests_exceptions
+from airflow import DAG
+from airflow.operators.bash import BashOperator
+from airflow.operators.python import PythonOperator
+
 
 dag = DAG(
     dag_id="03_download_rocket_launches",
