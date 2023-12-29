@@ -1,5 +1,5 @@
 import json
-from airflow import DAG
+from airflow.models.dag import DAG
 from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
 from airflow.utils.dates import days_ago
@@ -13,17 +13,22 @@ dag = DAG(
     schedule_interval="@daily",
 )
 
+dag = DAG(
+    dag_id="02_mkdir_download_rocket_launches",
+    start_date=airflow.utils.dates.days_ago(5),
+    schedule_interval="@daily",
+)
+
 # Create the tmp folder if it doesn't exist
 create_tmp_folder = BashOperator(
     task_id="create_tmp_folder",
-    bash_command="mkdir -p /tmp",
+    bash_command="mkdir -p ./tmp",
     dag=dag,
 )
 
-# Download launches.json from the internet and save it in the tmp folder
 download_launches = BashOperator(
     task_id="download_launches",
-    bash_command="curl -o /tmp/launches.json -L 'https://ll.thespacedevs.com/2.0.0/launch/upcoming'",
+    bash_command="curl -o /tmp/launches.json -L 'https://ll.thespacedevs.com/2.0.0/launch/upcoming'",  # noqa: E501
     dag=dag,
 )
 
