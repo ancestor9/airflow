@@ -44,4 +44,4 @@ calculate_stats = PythonOperator(
 )
 
 '''
-fetch_events >> calculate_stats
+fetch_events # >> calculate_stats
