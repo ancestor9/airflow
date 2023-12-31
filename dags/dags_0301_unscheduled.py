@@ -12,11 +12,13 @@ dag = DAG(
     schedule_interval=None
 )
 
+url = "http://openapi.seoul.go.kr:8088/614c50597a616e633131346e4b447142/xml/CardSubwayStatsNew/1/1000/20161101"
+
 fetch_events = BashOperator(
     task_id="fetch_events",
     bash_command=(
         "mkdir -p /data/events && "
-        "curl -o /data/events.json http://events_api:5000/events"
+        "curl -o /data/events.json {url}"
     ),
     dag=dag,
 )
@@ -27,8 +29,8 @@ def _calculate_stats(input_path, output_path):
 
     Path(output_path).parent.mkdir(exist_ok=True)
 
-    events = pd.read_json(input_path)
-    stats = events.groupby(["date", "user"]).size().reset_index()
+    events = pd.read_xml(input_path).iloc[3:, 4:]
+    stats = events.groupby(["SUB_STA_NM", "SUB_STA_NM"]).size().reset_index()
 
     stats.to_csv(output_path, index=False)
 
@@ -36,7 +38,7 @@ def _calculate_stats(input_path, output_path):
 calculate_stats = PythonOperator(
     task_id="calculate_stats",
     python_callable=_calculate_stats,
-    op_kwargs={"input_path": "/data/events.json", "output_path": "/data/stats.csv"},
+    op_kwargs={"input_path": "/data/events.xml", "output_path": "/data/stats.csv"},
     dag=dag,
 )
 
