@@ -7,7 +7,7 @@ from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
 
 dag = DAG(
-    dag_id="01_unscheduled", start_date=datetime(2020, 1, 1), schedule_interval=None
+    dag_id="0301_unscheduled", start_date=datetime(2020, 1, 1), schedule_interval=None
 )
 
 # xml 파일이지만 맨 뒤에 '&_type=json'을 붙이면 json으로 변환 ! - No
