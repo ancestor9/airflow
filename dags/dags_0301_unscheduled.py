@@ -19,11 +19,11 @@ fetch_events = BashOperator(
     bash_command=(
         "mkdir -p /data/events && "
         # "curl -o /data/events.json {url}"
-        "curl {{url}} | xmlstarlet fo --omit-decl --noindent -R -H -J > /data/events.json"
+        #"curl {{url}} | xmlstarlet fo --omit-decl --noindent -R -H -J > /data/events.json"
     ),
     dag=dag,
 )
-
+'''
 
 def _calculate_stats(input_path, output_path):
     """Calculates event statistics."""
@@ -43,4 +43,5 @@ calculate_stats = PythonOperator(
     dag=dag,
 )
 
+'''
 fetch_events >> calculate_stats
