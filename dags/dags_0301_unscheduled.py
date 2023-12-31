@@ -7,17 +7,18 @@ from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
 
 dag = DAG(
-    dag_id="01_unscheduled", start_date=datetime(2019, 1, 1), schedule_interval=None
+    dag_id="01_unscheduled", start_date=datetime(2020, 1, 1), schedule_interval=None
 )
 
-# xml 파일이지만 맨 뒤에 '&_type=json'을 붙이면 json으로 변환 !
-url = "http://openapi.seoul.go.kr:8088/614c50597a616e633131346e4b447142/xml/CardSubwayStatsNew/1/1000/20161101&_type=json"
+# xml 파일이지만 맨 뒤에 '&_type=json'을 붙이면 json으로 변환 ! - No
+url = "http://openapi.seoul.go.kr:8088/614c50597a616e633131346e4b447142/xml/CardSubwayStatsNew/1/1000/20161101"
 
 fetch_events = BashOperator(
     task_id="fetch_events",
     bash_command=(
         "mkdir -p /data/events && "
-        "curl -o /data/events.json {url}"
+        # "curl -o /data/events.json {url}"
+        "curl {url} | xmlstarlet fo --omit-decl --noindent -R -H -J > /data/events.json"
     ),
     dag=dag,
 )
