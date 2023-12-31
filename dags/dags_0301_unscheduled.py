@@ -7,10 +7,7 @@ from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
 
 dag = DAG(
-    dag_id="02_daily_schedule",
-    schedule_interval="@daily",
-    start_date=datetime(2019, 1, 1),
-    end_date=datetime(2019, 1, 5),
+    dag_id="01_unscheduled", start_date=datetime(2019, 1, 1), schedule_interval=None
 )
 
 # xml 파일이지만 맨 뒤에 '&_type=json'을 붙이면 json으로 변환 !
@@ -29,11 +26,11 @@ fetch_events = BashOperator(
 def _calculate_stats(input_path, output_path):
     """Calculates event statistics."""
 
-    events = pd.read_json(input_path)
-    stats = events.groupby(["LINE_NUM", "SUB_STA_NM"]).size().reset_index()
-    
-
     Path(output_path).parent.mkdir(exist_ok=True)
+
+    events = pd.read_json(input_path).iloc[3:, 4:]
+    stats = events.groupby(["LINE_NUM", "SUB_STA_NM"]).size().reset_index()
+
     stats.to_csv(output_path, index=False)
 
 
