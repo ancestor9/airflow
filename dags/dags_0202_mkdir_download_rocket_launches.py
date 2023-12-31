@@ -3,7 +3,7 @@ from airflow import DAG
 from airflow.operators.bash import BashOperator
 
 dag = DAG(
-    dag_id="02_mkdir_download_rocket_launches",
+    dag_id="0201_mkdir_download_rocket_launches",
     start_date=airflow.utils.dates.days_ago(5),
     schedule_interval="@daily",
 )

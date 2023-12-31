@@ -10,7 +10,7 @@ from airflow.operators.python import PythonOperator
 
 
 dag = DAG(
-    dag_id="03_download_rocket_launches",
+    dag_id="0202_download_rocket_launches",
     start_date=airflow.utils.dates.days_ago(5),
     schedule_interval="@daily",
 )
