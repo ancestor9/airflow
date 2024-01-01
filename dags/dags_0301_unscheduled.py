@@ -19,7 +19,7 @@ dag = DAG(
 fetch_events = BashOperator(
     task_id="fetch_events",
     bash_command=(
-        "mkdir -p /tmp/events && "
+    #    "mkdir -p /tmp/events && "
         "curl -o /tmp/events.json {url}"
     )
 )
