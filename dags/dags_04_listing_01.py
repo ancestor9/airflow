@@ -4,7 +4,7 @@ from airflow.operators.bash import BashOperator
 
 dag = DAG(
     dag_id="04_listing_01",
-    start_date=airflow.utils.dates.days_ago(3),
+    start_date=airflow.utils.dates.days_ago(2),
     schedule_interval="@hourly",
 )
 
