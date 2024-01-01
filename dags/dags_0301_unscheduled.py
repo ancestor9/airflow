@@ -27,10 +27,10 @@ def _calculate_stats(input_path, output_path):
     """Calculates event statistics."""
 
     Path(output_path).parent.mkdir(exist_ok=True)
-
-    events = pd.read_json(input_path)
-    print(events.head())
-    #stats = events.groupby(["stationName", "stationId"]).size().reset_index()
+    # input_path = "/tmp/events.json" json파일
+    row_data = input_path['rentBikeStatus']['row']
+    df = pd.DataFrame(row_data)
+    stats = df.groupby(["stationName", "stationId"]).size().reset_index()
 
     stats.to_csv(output_path, index=False)
 
