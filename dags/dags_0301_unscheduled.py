@@ -19,7 +19,8 @@ fetch_events = BashOperator(
     task_id="fetch_events",
     bash_command=(
         "curl -o /tmp/events.json {url}"
-    )
+    ),
+    dag=dag,
 )
 
 '''
@@ -42,6 +43,6 @@ calculate_stats = PythonOperator(
 )
 '''
 
-dag >> fetch_events 
+fetch_events 
 
 #>> calculate_stats
