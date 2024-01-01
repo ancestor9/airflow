@@ -29,7 +29,7 @@ def _calculate_stats(input_path, output_path):
     Path(output_path).parent.mkdir(exist_ok=True)
 
     events = pd.read_json(input_path)
-    display(events.head())
+    print(events.head())
     #stats = events.groupby(["stationName", "stationId"]).size().reset_index()
 
     stats.to_csv(output_path, index=False)
