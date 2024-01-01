@@ -42,6 +42,6 @@ calculate_stats = PythonOperator(
 )
 '''
 
-fetch_events 
+dag >> fetch_events 
 
 #>> calculate_stats
