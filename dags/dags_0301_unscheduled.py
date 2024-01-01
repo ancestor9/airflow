@@ -14,7 +14,6 @@ dag = DAG(
     start_date=datetime(2023, 1, 1), schedule_interval=None
 )
 
-# curl -o /tmp/~ 라고해야 permission denied error가 없음
 fetch_events = BashOperator(
     task_id="fetch_events",
     bash_command=(
@@ -30,7 +29,8 @@ def _calculate_stats(input_path, output_path):
     Path(output_path).parent.mkdir(exist_ok=True)
 
     events = pd.read_json(input_path)
-    stats = events.groupby(["stationName", "stationId"]).size().reset_index()
+    display(events.head())
+    #stats = events.groupby(["stationName", "stationId"]).size().reset_index()
 
     stats.to_csv(output_path, index=False)
 
