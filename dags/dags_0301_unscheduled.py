@@ -18,7 +18,6 @@ dag = DAG(
 fetch_events = BashOperator(
     task_id="fetch_events",
     bash_command=(
-    #    "mkdir -p /tmp/events && "
         "curl -o /tmp/events.json {url}"
     )
 )
@@ -43,4 +42,6 @@ calculate_stats = PythonOperator(
 )
 '''
 
-fetch_events #>> calculate_stats
+fetch_events 
+
+#>> calculate_stats
