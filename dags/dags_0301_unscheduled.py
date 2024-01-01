@@ -6,8 +6,9 @@ from airflow import DAG
 from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
 
-# xml 파일이지만 맨 뒤에 '&_type=json'을 붙이면 json으로 변환 ! - No
-url = "http://openapi.seoul.go.kr:8088/614c50597a616e633131346e4b447142/xml/CardSubwayStatsNew/1/1000/20161101"
+# 서울시 공공데이터(자전거)
+apikey_openapi_seoel_go_kr = '614c50597a616e633131346e4b447142'
+url = f'http://openapi.seoul.go.kr:8088/{apikey_openapi_seoel_go_kr}/json/bikeList/1/1000/'
 
 dag = DAG(
     dag_id="0301_unscheduled", 
@@ -18,8 +19,7 @@ fetch_events = BashOperator(
     task_id="fetch_events",
     bash_command=(
         "mkdir -p /data/events && "
-        # "curl -o /data/events.json {url}"
-        "curl {{url}} | xmlstarlet fo --omit-decl --noindent -R -H -J > /data/events.json"
+        "curl -o /data/events.json {url}"
     )
 )
 
@@ -30,7 +30,7 @@ def _calculate_stats(input_path, output_path):
     Path(output_path).parent.mkdir(exist_ok=True)
 
     events = pd.read_json(input_path).iloc[3:, 4:]
-    stats = events.groupby(["LINE_NUM", "SUB_STA_NM"]).size().reset_index()
+    stats = events.groupby(["stationName", "stationId"]).size().reset_index()
 
     stats.to_csv(output_path, index=False)
 
