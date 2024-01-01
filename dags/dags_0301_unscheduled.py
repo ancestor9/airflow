@@ -18,8 +18,9 @@ dag = DAG(
 fetch_events = BashOperator(
     task_id="fetch_events",
     bash_command=(
-        "curl -o /tmp/events.json {url}"
+        f"curl -o /tmp/events.json {url}"
     ),
+    env={'url': url},
     dag=dag,
 )
 
