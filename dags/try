@@ -1,0 +1,40 @@
+from datetime import datetime, timedelta
+from airflow import DAG
+from airflow.operators.bash import BashOperator
+
+# Define the URL for the Seoul public API
+url = 'http://openapi.seoul.go.kr:8088/614c50597a616e633131346e4b447142/json/bikeList/1/1000/'
+
+# Default arguments for the DAG
+default_args = {
+    'owner': 'your_name',
+    'start_date': datetime(2023, 1, 1),
+    'retries': 1,
+    'retry_delay': timedelta(minutes=5),
+}
+
+# Create the DAG instance
+dag = DAG(
+    dag_id="0301_unscheduled", 
+    default_args=default_args,
+    schedule_interval=None,  # Set this to a specific schedule if needed
+)
+
+# Task to fetch events using curl
+fetch_events = BashOperator(
+    task_id="fetch_events",
+    bash_command=f"curl -o /tmp/events.json {url}",
+    dag=dag,
+)
+
+# Add any other tasks or dependencies as needed
+
+# Set the task dependencies (if any)
+# For example, if you have another task named "process_events," you can set dependencies like:
+# fetch_events >> process_events
+
+# The last line of your DAG file should instantiate the DAG
+if __name__ == "__main__":
+    dag.cli()
+
+# Note: Make sure to customize the 'owner' field in the default_args dictionary with your name or a meaningful identifier.
