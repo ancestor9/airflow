@@ -27,13 +27,16 @@ def _calculate_stats(input_path, output_path):
     """Calculates event statistics."""
 
     Path(output_path).parent.mkdir(exist_ok=True)
-    # input_path = "/tmp/events.json" json파일
-    print(input_path)
-    print(type(input_path))
-    row_data = input_path['rentBikeStatus']['row']
+# Read JSON data from the file
+    with open(input_path, 'r') as file:
+        data = json.load(file)
+    # Extract relevant data
+    row_data = data['rentBikeStatus']['row']
+    # Create DataFrame
     df = pd.DataFrame(row_data)
+    # Group by and calculate statistics
     stats = df.groupby(["stationName", "stationId"]).size().reset_index()
-
+    # Save to CSV
     stats.to_csv(output_path, index=False)
 
 
