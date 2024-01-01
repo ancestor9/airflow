@@ -7,8 +7,7 @@ from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
 
 # 서울시 공공데이터(자전거)
-apikey_openapi_seoel_go_kr = '614c50597a616e633131346e4b447142'
-url = f'http://openapi.seoul.go.kr:8088/{apikey_openapi_seoel_go_kr}/json/bikeList/1/1000/'
+url = 'http://openapi.seoul.go.kr:8088/614c50597a616e633131346e4b447142/json/bikeList/1/1000/'
 
 dag = DAG(
     dag_id="0301_unscheduled", 
