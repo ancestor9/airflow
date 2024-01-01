@@ -12,7 +12,7 @@ url = f'http://openapi.seoul.go.kr:8088/{apikey_openapi_seoel_go_kr}/json/bikeLi
 
 dag = DAG(
     dag_id="0301_unscheduled", 
-    start_date=datetime(2016, 1, 1), schedule_interval=None
+    start_date=datetime(2023, 1, 1), schedule_interval=None
 )
 
 fetch_events = BashOperator(
@@ -29,7 +29,7 @@ def _calculate_stats(input_path, output_path):
 
     Path(output_path).parent.mkdir(exist_ok=True)
 
-    events = pd.read_json(input_path).iloc[3:, 4:]
+    events = pd.read_json(input_path)
     stats = events.groupby(["stationName", "stationId"]).size().reset_index()
 
     stats.to_csv(output_path, index=False)
