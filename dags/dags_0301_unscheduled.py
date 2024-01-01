@@ -15,11 +15,12 @@ dag = DAG(
     start_date=datetime(2023, 1, 1), schedule_interval=None
 )
 
+# mkdir -p /tmp/ 라고해야 permission denied error가 없음
 fetch_events = BashOperator(
     task_id="fetch_events",
     bash_command=(
-        "mkdir -p /data/events && "
-        "curl -o /data/events.json {url}"
+        "mkdir -p /tmp/events && "
+        "curl -o /tmp/events.json {url}"
     )
 )
 
@@ -38,7 +39,7 @@ def _calculate_stats(input_path, output_path):
 calculate_stats = PythonOperator(
     task_id="calculate_stats",
     python_callable=_calculate_stats,
-    op_kwargs={"input_path": "/data/events.json", "output_path": "/data/stats.csv"},
+    op_kwargs={"input_path": "/tmp/events.json", "output_path": "/tmp/stats.csv"},
     dag=dag,
 )
 
