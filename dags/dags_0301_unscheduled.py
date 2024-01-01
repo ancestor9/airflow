@@ -14,7 +14,7 @@ dag = DAG(
     start_date=datetime(2023, 1, 1), schedule_interval=None
 )
 
-# mkdir -p /tmp/ 라고해야 permission denied error가 없음
+# curl -o /tmp/~ 라고해야 permission denied error가 없음
 fetch_events = BashOperator(
     task_id="fetch_events",
     bash_command=(
@@ -23,7 +23,7 @@ fetch_events = BashOperator(
     )
 )
 
-
+'''
 def _calculate_stats(input_path, output_path):
     """Calculates event statistics."""
 
@@ -41,5 +41,6 @@ calculate_stats = PythonOperator(
     op_kwargs={"input_path": "/tmp/events.json", "output_path": "/tmp/stats.csv"},
     dag=dag,
 )
+'''
 
-fetch_events >> calculate_stats
+fetch_events #>> calculate_stats
