@@ -20,11 +20,10 @@ fetch_events = BashOperator(
     bash_command=(
         f"curl -o /tmp/events.json {url}"
     ),
-    env={'url': url},
+    env={'url': url},       # Pass the 'url' variable to the environment
     dag=dag,
 )
 
-'''
 def _calculate_stats(input_path, output_path):
     """Calculates event statistics."""
 
@@ -42,8 +41,5 @@ calculate_stats = PythonOperator(
     op_kwargs={"input_path": "/tmp/events.json", "output_path": "/tmp/stats.csv"},
     dag=dag,
 )
-'''
 
-fetch_events 
-
-#>> calculate_stats
+fetch_events >> calculate_stats
