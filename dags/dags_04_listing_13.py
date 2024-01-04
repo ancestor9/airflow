@@ -5,7 +5,7 @@ from airflow import DAG
 from airflow.operators.python import PythonOperator
 
 dag = DAG(
-    dag_id="04_listing_4_13",
+    dag_id="04_listing_13",
     start_date=airflow.utils.dates.days_ago(1),
     schedule_interval="@hourly",
 )
@@ -26,7 +26,8 @@ get_data = PythonOperator(
         "year": "{{ execution_date.year }}",
         "month": "{{ execution_date.month }}",
         "day": "{{ execution_date.day }}",
-        "hour": "{{ execution_date.hour }}",
+        #"hour": "{{ execution_date.hour }}",
+        "hour": "{{ (execution_date - macros.timedelta(hours=3)).strftime('%H') }}",
         "output_path": "/tmp/wikipageviews.gz",
     },
     dag=dag,
