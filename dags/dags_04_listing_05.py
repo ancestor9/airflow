@@ -17,6 +17,7 @@ def _get_data(execution_date):
         f"{year}/{year}-{month:0>2}/pageviews-{year}{month:0>2}{day:0>2}-{hour:0>2}0000.gz"
     )
     output_path = "/tmp/wikipageviews.gz"
+    print(f"Constructed URL: {url}")
     request.urlretrieve(url, output_path)
 
 
