@@ -8,7 +8,6 @@ with DAG(
     schedule=None,
     catchup=False
 ) as dag:
-
     
     def insrt_postgres(ip, port, dbname, user, passwd, **kwargs):
         import psycopg2

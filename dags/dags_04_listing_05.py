@@ -12,7 +12,7 @@ dag = DAG(
 
 def _get_data(execution_date):
     year, month, day, hour, *_ = execution_date.timetuple()
-    hour -= 3
+    hour -= 3       # 과거시간으로 다운받으려고
     url = (
         "https://dumps.wikimedia.org/other/pageviews/"
         f"{year}/{year}-{month:0>2}/pageviews-{year}{month:0>2}{day:0>2}-{hour:0>2}0000.gz"
